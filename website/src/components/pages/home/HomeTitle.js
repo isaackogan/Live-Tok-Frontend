@@ -8,14 +8,22 @@ const HomeContainer = styled.div`
   margin-top: 5%;
   font-family: Rubik, Arial, sans-serif;
   flex-direction: column;
+  align-items: center;
 `;
 
 const Title = styled.span`
-    
+  font-weight: bold;
+  font-size: 50px;
+  color: black;
 `;
 
 const Description = styled.span`
-
+  font-size: 19px;
+  width: 40%;
+  color: #2f2f2f;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 1%;
 `
 
 const HomeTitle = () => {

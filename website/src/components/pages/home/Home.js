@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Particulate from "../../particles";
 import HomeTitle from "./HomeTitle";
+import StatsRing from "./RingGraphic";
+import RingGraphic from "./RingGraphic";
 const {Component} = require("react");
 
 const HomeContainer = styled.div`
@@ -32,7 +34,7 @@ class Home extends Component {
                 <Particulate />
                 <InnerContainer>
                     <HomeTitle />
-
+                    <RingGraphic />
                 </InnerContainer>
             </HomeContainer>
         )
