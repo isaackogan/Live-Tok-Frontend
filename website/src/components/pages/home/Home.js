@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Particulate from "../../particles";
+import HomeTitle from "./HomeTitle";
 const {Component} = require("react");
 
 const HomeContainer = styled.div`
@@ -9,6 +11,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   background-position: center;
   margin-top: 3px;
+  background-color: transparent;
 `;
 
 const InnerContainer = styled.div`
@@ -26,7 +29,9 @@ class Home extends Component {
 
         return (
             <HomeContainer>
+                <Particulate />
                 <InnerContainer>
+                    <HomeTitle />
 
                 </InnerContainer>
             </HomeContainer>

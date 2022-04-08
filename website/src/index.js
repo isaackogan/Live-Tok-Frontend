@@ -1,7 +1,7 @@
 import {BrowserRouter} from "react-router-dom";
 import App from "./components/app";
 
-const {createRoot} = require("react-dom");
+const {createRoot} = require("react-dom/client");
 
 const container = document.getElementById("root");
 const root = createRoot(container);
