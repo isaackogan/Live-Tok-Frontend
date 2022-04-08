@@ -89,6 +89,7 @@ const FormBar = styled.form`
   :hover {
     outline: none !important;
   }
+  
 `;
 
 const FormButton = styled.button`
