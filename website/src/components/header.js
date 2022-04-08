@@ -24,15 +24,6 @@ const Logo2 = styled.img`
   padding-bottom: 4px;
 `;
 
-const Spanner = styled.span`
-  width: 1px;
-  height: 28px;
-  margin-right: -16px;
-  display: inline-block;
-  background: rgba(22, 24, 35, 0.12);
-`;
-
-
 const HeaderLogos = styled.a`
   width: 170px;
   cursor: pointer;
@@ -77,7 +68,7 @@ const SearchInput = styled.input`
   background: none;
   outline: none;
   width: 190px;
-  font-size: 15px;
+  font-size: 13px;
   
   :-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px #e0e1e2 inset !important;
@@ -100,11 +91,48 @@ const FormBar = styled.form`
   }
 `;
 
+const FormButton = styled.button`
+  border: none;
+  float: right;
+  width: 4em;
+  height: 3.5em;
+  border-bottom-right-radius: 25px;
+  border-top-right-radius: 25px;
+  background: transparent;
+  cursor: pointer;
+  
+  :hover {
+    font-family: Arial, sans-serif;
+    background-color: lightgray;
+    transition: background-color 100ms;
+  }
+`;
+
+/*
+Haha Star Trek
+ */
+const Hyperspanner = styled.span`
+  width: 1px;
+  height: 28px;
+  margin-right: -16px;
+  display: inline-block;
+  background: rgba(22, 24, 35, 0.12);
+`;
+
+
 function SearchMenu() {
 
     return (
         <FormBar action="/search" method="get">
+
             <SearchInput type="text" placeholder="Search TikTok Streams" name="creator_id" required/>
+
+            <Hyperspanner/>
+
+            <FormButton type="submit">
+                <img alt="submit" src={"/icons/search.svg"}/>
+            </FormButton>
+
         </FormBar>
     )
 }
