@@ -1,4 +1,6 @@
 import {Route, Routes} from "react-router-dom";
+import Home from "./pages/home/Home";
+import Header from "./header";
 
 const Main = () => {
 
@@ -10,3 +12,14 @@ const Main = () => {
     )
 
 }
+
+const App = () => {
+    return (
+        <div className="App">
+            <Header />
+            <Main />
+        </div>
+    )
+}
+
+export default App;
