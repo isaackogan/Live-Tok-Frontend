@@ -4,7 +4,7 @@ import Config from "../../../../index";
 import Cookies from "universal-cookie";
 
 const GiveawayContainer = styled.div`
-  width: 23%;
+  width: 24%;
   height: 520px;
   background-color: #f6f6f6;
   box-shadow: 0 0 15px rgb(0 0 0 / 30%);
@@ -151,6 +151,11 @@ class ControlGiveaway extends Component {
                 this.setState({"loading": false})
             });
 
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const cookies = new Cookies();
+        cookies.set("tracking", this.state.started, {path: "/manage"});
     }
 
     cancelGiveaway(event) {

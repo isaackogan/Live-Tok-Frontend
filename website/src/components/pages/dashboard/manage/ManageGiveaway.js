@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import Cookies from "universal-cookie";
 
 const GiveawayContainer = styled.div`
-  width: 20%;
+  width: 24%;
   height: 520px;
   background-color: #f6f6f6;
   box-shadow: 0 0 15px rgb(0 0 0 / 30%);
@@ -90,11 +90,29 @@ class ManageGiveaway extends Component {
             giveawayPrizeName: cookies.get("giveawayPrizeName"),
             giveawayJoinWord: cookies.get("giveawayJoinWord"),
             giveawayWinnerCount: cookies.get("giveawayWinnerCount"),
-            giveawayDuration: cookies.get("giveawayDuration")
+            giveawayDuration: cookies.get("giveawayDuration"),
+            started: this.props.giveaway !== null && this.props.giveaway["ended_at"] == null
         }
 
         this.handleChange = this.handleChange.bind(this);
 
+    }
+
+    updateData() {
+        const cookies = new Cookies();
+        let tracking = cookies.get("tracking") || null;
+        if (tracking != null) {
+            this.setState({started: JSON.parse(tracking)})
+        }
+
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.updateData(), 500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
 
@@ -104,8 +122,8 @@ class ManageGiveaway extends Component {
          * Prize Name
          */
         if (event.target.id === "giveawayPrizeName") {
-            if (event.target.value.length > 20) {
-                event.target.value = event.target.value.substr(0, 20);
+            if (event.target.value.length > 15) {
+                event.target.value = event.target.value.substr(0, 15);
             }
         }
 
@@ -113,8 +131,8 @@ class ManageGiveaway extends Component {
          * Join Word
          */
         else if (event.target.id === "giveawayJoinWord") {
-            if (event.target.value.length > 20) {
-                event.target.value = event.target.value.substr(0, 20);
+            if (event.target.value.length > 5) {
+                event.target.value = event.target.value.substr(0, 5);
             }
             if (event.target.value.includes(" ")) {
                 event.target.value = event.target.value.replaceAll(" ", "");
@@ -207,14 +225,27 @@ class ManageGiveaway extends Component {
                         />
 
                         <BodySubText>The duration of the giveaway</BodySubText>
-                        <InputField
-                            type="text"
-                            id="giveawayDuration"
-                            placeholder="Duration (Minutes)"
-                            required
-                            value={this.state.giveawayDuration}
-                            onChange={this.handleChange}
-                        />
+
+                        {this.state.started ? (
+                            <InputField
+                                style={{"color": "grey"}}
+                                type="text"
+                                id="giveawayDuration"
+                                placeholder="Duration (Minutes)"
+                                value={this.state.giveawayDuration}
+                                onChange={this.handleChange}
+                                disabled
+                            />
+                        ) : (
+                            <InputField
+                                type="text"
+                                id="giveawayDuration"
+                                placeholder="Duration (Minutes)"
+                                required
+                                value={this.state.giveawayDuration}
+                                onChange={this.handleChange}
+                            />
+                        )}
 
                     </ManageForm>
 

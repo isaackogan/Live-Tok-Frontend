@@ -27,7 +27,6 @@ class Countdown extends Component {
         clearInterval(this.interval);
     }
 
-
     getTime() {
         return Math.floor((new Date()).getTime() / 1000);
     }

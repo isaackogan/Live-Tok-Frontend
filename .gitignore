@@ -11,6 +11,7 @@ website/node_modules
 
 # production
 /build
+build
 
 .idea
 

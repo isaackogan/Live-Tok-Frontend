@@ -203,6 +203,25 @@ const CreatorPageMaster = () => {
     return <CreatorPageSlave creator_id={params["creator_id"]} />
 }
 
+const ViewerCount = styled.span`
+  margin-left: 30px;
+  font-size: 32px;
+  font-family: Rubik, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(75, 74, 74);
+  filter: drop-shadow(3px 2px 10px rgba(0, 0, 0, 0.4));
+
+`;
+
+const ViewerSVG = styled.img`
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
+
+`;
+
 
 class CreatorPage extends Component {
 
@@ -240,13 +259,14 @@ class CreatorPage extends Component {
                         <CreatorName>@{this.props.creator_id}</CreatorName>
                         <CreatorNickname>{this.state.user_info["nickname"]}</CreatorNickname>
                     </CreatorNameContainer>
+                    <ViewerCount>250 <ViewerSVG src="/icons/eye.svg"/></ViewerCount>
                 </ProfileContainer>
                 <DataContainer style={{marginTop: "2%"}}>
                     <LeaderboardContainer><Leaderboard leaderboard_data={this.state.user_info["leaderboards"]} /></LeaderboardContainer>
                     <OtherSuperContainer>
                         <OtherContainer>
                             <GiveawayAndInfo>
-                                <Giveaway />
+                                <Giveaway key={Math.random().toString(36).substring(2)} data={this.state.user_info["giveaway"]} />
                                 <StreamInfo creator_id={this.props.creator_id}/>
                             </GiveawayAndInfo>
                             <LiveChat creator_id={this.props.creator_id}/>
