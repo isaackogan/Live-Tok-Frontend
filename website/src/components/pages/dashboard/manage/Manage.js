@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import {Component} from "react";
-import Controls from "./Controls";
+import ControlPrimary from "./ControlPrimary";
 import DashboardTitle from "./DashboardTitle";
 import Particulate from "../../../particles";
 import ManageGiveaway from "./ManageGiveaway";
+import ControlGiveaway from "./ControlGiveaway";
 
 const HomeContainer = styled.div`
   width: 100%;
@@ -46,17 +47,20 @@ class Manage extends Component {
         super(props);
     }
 
+
     // Giveaways (# of Winners, Prize Name, Countdown, Join Word, Stop, Start, Re-Roll)
     // Chat Stuff (Graph, Top Chatter, Export Chat-logs)
     render() {
+
         return (
             <HomeContainer>
                 <Particulate />
                 <InnerContainer>
                     <DashboardTitle creator_id={this.props.dashboard_data["unique_id"]} />
                     <SuperInnerContainer>
-                        <Controls tracking={this.props.dashboard_data["tracking"]}/>
+                        <ControlPrimary tracking={this.props.dashboard_data["tracking"]}/>
                         <ManageGiveaway />
+                        <ControlGiveaway giveaway={this.props.dashboard_data["giveaway"]}/>
                     </SuperInnerContainer>
                 </InnerContainer>
             </HomeContainer>

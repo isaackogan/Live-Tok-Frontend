@@ -14,38 +14,11 @@ const GiveawayContainer = styled.div`
   margin-left: 35px;
 `;
 
-const ControlButton = styled.button`
-  border: none;
-  outline: none;
-  background-color: black;
-  padding: 20px;
-  color: white;
-  font-family: Rubik, Arial, sans-serif;
-  font-size: 23px;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  
-  :active {
-    opacity: 0.8;
-  }
-`;
-
 const SectionTitle = styled.span`
   font-size: 30px;
   font-weight: bold;
   color: #131313;
 `;
-
-const BodyText = styled.span`
-  font-size: 14px;
-  color: #ffffff;
-  margin-top: 10px;
-  font-weight: lighter;
-`;
-
 
 const Hyperspanner = styled.div`
   width: 90%;
@@ -53,7 +26,7 @@ const Hyperspanner = styled.div`
   background-color: #d7d7d7;
   float: bottom;
   margin-top: 10px;
-  margin-bottom: 45px;
+  margin-bottom: 35px;
 `;
 
 
@@ -66,8 +39,45 @@ const InnerContainer = styled.div`
 `;
 
 const InputField = styled.input`
-  
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background-color: #b3b3b3;
+  color: #000000;
+  text-align: center;
+  font-size: 18px;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  font-family: Rubik, Arial, sans-serif;
 `;
+
+const ManageForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+
+const BodySubText = styled.span`
+  font-size: 14px;
+  color: #000000;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: lighter;
+`;
+
+/**
+ * Via https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number
+ * @param str
+ * @returns {boolean}
+ */
+function isNumeric(str) {
+    if (typeof str != "string") return false
+    return !isNaN(str) &&
+        !isNaN(parseFloat(str))
+}
 
 class ManageGiveaway extends Component {
     authorization;
@@ -75,14 +85,88 @@ class ManageGiveaway extends Component {
     constructor(props) {
         super(props);
         const cookies = new Cookies();
-        this.authorization = cookies.get("authorization");
-        this.state = { loading: false, started: this.props.tracking}
+
+        this.state = {
+            giveawayPrizeName: cookies.get("giveawayPrizeName"),
+            giveawayJoinWord: cookies.get("giveawayJoinWord"),
+            giveawayWinnerCount: cookies.get("giveawayWinnerCount"),
+            giveawayDuration: cookies.get("giveawayDuration")
+        }
+
+        this.handleChange = this.handleChange.bind(this);
+
     }
 
 
-    render() {
+    handleChange(event) {
 
-        // Giveaways (# of Winners, Prize Name, Countdown, Join Word, Stop, Start, Re-Roll)
+        /**
+         * Prize Name
+         */
+        if (event.target.id === "giveawayPrizeName") {
+            if (event.target.value.length > 20) {
+                event.target.value = event.target.value.substr(0, 20);
+            }
+        }
+
+        /**
+         * Join Word
+         */
+        else if (event.target.id === "giveawayJoinWord") {
+            if (event.target.value.length > 20) {
+                event.target.value = event.target.value.substr(0, 20);
+            }
+            if (event.target.value.includes(" ")) {
+                event.target.value = event.target.value.replaceAll(" ", "");
+            }
+        }
+
+        /**
+         * Winner Count
+         */
+        else if (event.target.id === "giveawayWinnerCount") {
+            if (!isNumeric(event.target.value)) {
+                event.target.value = event.target.value.replace(/\D+/g, "");
+            }
+            if (event.target.value > 5) {
+                event.target.value = 5;
+            }
+            if (event.target.value < 1 && event.target.value !== "") {
+                event.target.value = 1;
+            }
+        }
+
+        /**
+         * Duration
+         */
+        else if (event.target.id === "giveawayDuration") {
+            if (!isNumeric(event.target.value)) {
+                event.target.value = event.target.value.replace(/\D+/g, "");
+            }
+            if (event.target.value > 60) {
+                event.target.value = 60;
+            }
+            if (event.target.value < 1 && event.target.value !== "") {
+                event.target.value = 1;
+            }
+        }
+
+        /**
+         * None of the above
+         */
+        else {
+            return;
+        }
+
+        const cookies = new Cookies();
+        cookies.set(event.target.id, event.target.value, {path: "/manage"})
+        let e = {}
+        e[event.target.id] = event.target.value
+        this.setState(e);
+
+    }
+
+    render() {
 
         return (
             <GiveawayContainer>
@@ -90,37 +174,49 @@ class ManageGiveaway extends Component {
                     <SectionTitle>Giveaway Config</SectionTitle>
                     <Hyperspanner />
 
-                    <form onSubmit={event => event.preventDefault()} style={{"marginBottom": "30px"}}>
+                    <ManageForm onSubmit={event => event.preventDefault()} style={{"marginBottom": "30px"}}>
 
-                        <InputField
-                            type="number"
-                            placeholder="Number of Winners"
-                            name="creator_id"
-                            required
-                            onChange={this.handleChange}
-                        />
-
+                        <BodySubText>The name of the giveaway prize</BodySubText>
                         <InputField
                             type="text"
+                            id="giveawayPrizeName"
                             placeholder="Prize Name"
-                            name="creator_id"
                             required
+                            value={this.state.giveawayPrizeName}
                             onChange={this.handleChange}
                         />
 
+                        <BodySubText>The word to type in the LIVE to join</BodySubText>
                         <InputField
-                            type="number"
-                            placeholder="Number of Winners"
-                            name="creator_id"
+                            type="text"
+                            id="giveawayJoinWord"
+                            placeholder="Join Word (in Chat)"
                             required
+                            value={this.state.giveawayJoinWord}
                             onChange={this.handleChange}
                         />
 
-                        <ControlButton>
-                            Save Settings
-                            <BodyText>Save Configuration</BodyText>
-                        </ControlButton>
-                    </form>
+                        <BodySubText>The number of giveaway winners</BodySubText>
+                        <InputField
+                            type="text"
+                            id="giveawayWinnerCount"
+                            placeholder="Number of Winners"
+                            required
+                            value={this.state.giveawayWinnerCount}
+                            onChange={this.handleChange}
+                        />
+
+                        <BodySubText>The duration of the giveaway</BodySubText>
+                        <InputField
+                            type="text"
+                            id="giveawayDuration"
+                            placeholder="Duration (Minutes)"
+                            required
+                            value={this.state.giveawayDuration}
+                            onChange={this.handleChange}
+                        />
+
+                    </ManageForm>
 
                 </InnerContainer>
             </GiveawayContainer>

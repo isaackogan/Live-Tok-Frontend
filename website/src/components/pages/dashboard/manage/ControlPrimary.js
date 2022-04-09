@@ -65,7 +65,7 @@ const InnerContainer = styled.div`
   align-items: center;
 `;
 
-class Controls extends Component {
+class ControlPrimary extends Component {
     authorization;
 
     constructor(props) {
@@ -182,4 +182,4 @@ class Controls extends Component {
 
 }
 
-export default Controls;
+export default ControlPrimary;
