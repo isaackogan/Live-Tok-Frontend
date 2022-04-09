@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Component} from "react";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -30,25 +31,33 @@ const Description = styled.span`
 
 const Code = styled.code`
   background-color: black;
-  border-radius: 5px;
+  border-radius: 8px;
   color: white;
   margin-left: 5px;
   margin-right: 5px;
-  padding-left: 2px;
-  padding-right: 2px;
-  outline: 4px solid black;
+  padding: 4px 6px;
 `
 
-const ConnectTitle = () => {
-    return (
-        <HomeContainer>
-            <Title>Choose Your Account</Title>
-            <Description>
-                Select your account name. Place the code <Code>123 222 333</Code> into your
-                account's Bio. You can remove it after we're done here.
-            </Description>
-        </HomeContainer>
-    )
+class ConnectTitle extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+
+    render() {
+        return (
+            <HomeContainer>
+                <Title>Choose Your Account</Title>
+                <Description>
+                    Select your account name. Put the auth code <Code>{this.props.auth_code}</Code> into your
+                    TikTok account's Biography. You can remove it after we're done here.
+                </Description>
+            </HomeContainer>
+        )
+    }
 }
+
+
 
 export default ConnectTitle;

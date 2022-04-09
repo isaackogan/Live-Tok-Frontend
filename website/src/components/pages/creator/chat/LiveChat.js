@@ -2,6 +2,7 @@ import {Component} from "react";
 import styled from "styled-components";
 import {io} from "socket.io-client";
 import ChatComment from "./ChatComment";
+import Config from "../../../../index";
 
 const ChatContainer = styled.div`
   width: 450px;
@@ -18,7 +19,7 @@ const ChatContainer = styled.div`
 
 const ChatInnerContainer = styled.div`
   margin-top: 20px;
-  height: 510px;
+  height: 553px;
   width: 90%;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -63,8 +64,8 @@ class LiveChat extends Component {
         super(props);
         this.state = { messages: [] }
 
-
-        let connection = new io("https://tiktok-chat-reader.zerody.one/");
+        // TODO replace with HTTPS-CF-Proxied version
+        let connection = new io(Config.tiktok_ws_url);
         connection.emit("setUniqueId", this.props.creator_id)
         connection.on('chat', this.handleData);
         connection.connect();
@@ -85,6 +86,7 @@ class LiveChat extends Component {
         for (let item of this.state.messages) {
             items.push(
                 <ChatComment
+                    key={Math.random().toString(36).substring(2)}
                     comment={item.comment}
                     uniqueId={item.uniqueId}
                     avatarUrl={item["profilePictureUrl"]}

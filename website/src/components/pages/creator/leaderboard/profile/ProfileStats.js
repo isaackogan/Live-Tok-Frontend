@@ -46,16 +46,18 @@ class StatsRing extends Component {
         super(props);
 
         this.state = {
-            progress: 0
+            progress: this.props.doAnimation ? 0 : (this.props.max === 0 ? 0 : this.props.max || 100)
         };
     }
 
     componentDidMount() {
         const interval = setInterval(() => {
-            if (this.state.progress >= (this.props.max || 100)) {
+
+            if (this.state.progress >= (this.props.max === 0 ? 0 : this.props.max || 100)) {
                 clearInterval(interval);
                 return;
             }
+
             this.setState({ progress: this.state.progress + 5 });
 
         }, 100);
@@ -82,7 +84,6 @@ class ProfileStats extends Component {
 
     render() {
         let percent = (this.props.current_xp / this.props.required_xp) * 100;
-
         return (
             <ProfileStatsContainer className={"footer__endrow"}>
                 <StatsContainer>
@@ -91,15 +92,15 @@ class ProfileStats extends Component {
                 </StatsContainer>
                 <StatsContainer>
                     <StatName>EXPERIENCE</StatName>
-                    <StatValue>{this.props.current_xp}</StatValue>
+                    <StatValue>{this.props.experience}</StatValue>
                 </StatsContainer>
                 <StatsContainer>
-                    <StatName>COINS (+10 XP/EA)</StatName>
+                    <StatName>COINS (+BONUS XP)</StatName>
                     <StatValue>{this.props.coins}</StatValue>
                 </StatsContainer>
                 <StatsContainer>
                     <div style={{width: "50px"}}>
-                        <StatsRing max={percent} level={this.props.level}/>
+                        <StatsRing doAnimation={this.props.doAnimation} max={percent} level={this.props.level}/>
                     </div>
                 </StatsContainer>
             </ProfileStatsContainer>

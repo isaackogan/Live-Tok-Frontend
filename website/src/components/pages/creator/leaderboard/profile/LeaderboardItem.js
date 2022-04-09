@@ -44,6 +44,7 @@ class LeaderboardItem extends Component {
     }
 
     render() {
+
         return <ItemContainer>
             <ItemInnerContainer>
                 <ProfileInfo avatar_url={this.props.avatar_url} unique_id={this.props.unique_id} position={this.props.position} />
@@ -52,7 +53,9 @@ class LeaderboardItem extends Component {
                     messages={this.props.messages}
                     required_xp={this.props.required_xp}
                     current_xp={this.props.current_xp}
+                    experience={this.props.experience}
                     level={this.props.level}
+                    doAnimation={this.props.doAnimation}
                 />
             </ItemInnerContainer>
             {this.getHyperSpanner()}

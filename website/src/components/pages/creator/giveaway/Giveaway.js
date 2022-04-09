@@ -26,6 +26,11 @@ const SectionTitle = styled.span`
 const GiveawayDesc = styled.span`
   font-size: 20px;
   color: #424242;
+  text-align: center;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
 const GiveawayInfo = styled.span`

@@ -115,7 +115,6 @@ class RingGraphic extends Component {
             progress = Math.max(20, 100 - this.state.percent);
         }
 
-        console.log(progress)
         return (
             <HomeContainer>
                 <ProgressRing

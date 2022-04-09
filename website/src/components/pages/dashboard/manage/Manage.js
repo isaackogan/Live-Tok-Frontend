@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import {Component} from "react";
+import Controls from "./Controls";
+import DashboardTitle from "./DashboardTitle";
+import Particulate from "../../../particles";
+import ManageGiveaway from "./ManageGiveaway";
 
 const HomeContainer = styled.div`
   width: 100%;
@@ -14,11 +18,21 @@ const HomeContainer = styled.div`
 
 const InnerContainer = styled.div`
   width: 90%;
-  margin-top: 5%;
+  margin-top: 4%;
   display: flex;
-  padding-bottom: 150px;
+  flex-direction: column;
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.4);
+
+`;
+
+
+const SuperInnerContainer = styled.div`
+  width: 90%;
+  margin-top: 4%;
+  display: flex;
   align-items: center;
-  justify-content: space-evenly;
   flex-direction: row;
   background-position: center;
   background-size: cover;
@@ -26,27 +40,24 @@ const InnerContainer = styled.div`
 
 `;
 
-const GiveawayContainer = styled.div`
-  width: 20%;
-  height: 620px;
-  background-color: #f6f6f6;
-  box-shadow: 0 0 15px rgb(0 0 0 / 30%);
-  font-family: Rubik, Arial, sans-serif;
-  align-items: center;
-  display: flex;
-  
-`;
+class Manage extends Component {
 
-class Connect extends Component {
-    //                 <Particulate color1="#828282" color2="#828282"/>
+    constructor(props) {
+        super(props);
+    }
+
+    // Giveaways (# of Winners, Prize Name, Countdown, Join Word, Stop, Start, Re-Roll)
+    // Chat Stuff (Graph, Top Chatter, Export Chat-logs)
     render() {
         return (
             <HomeContainer>
+                <Particulate />
                 <InnerContainer>
-                    <GiveawayContainer>Giveaways (# of Winners, Prize Name, Countdown, Join Word, Stop, Start, Re-Roll)</GiveawayContainer>
-                    <GiveawayContainer>Chat Stuff (Graph, Top Chatter, Export Chat-logs)</GiveawayContainer>
-                    <GiveawayContainer>Copy of LiveChat</GiveawayContainer>
-
+                    <DashboardTitle creator_id={this.props.dashboard_data["unique_id"]} />
+                    <SuperInnerContainer>
+                        <Controls tracking={this.props.dashboard_data["tracking"]}/>
+                        <ManageGiveaway />
+                    </SuperInnerContainer>
                 </InnerContainer>
             </HomeContainer>
         )
@@ -54,4 +65,4 @@ class Connect extends Component {
 
 }
 
-export default Connect;
+export default Manage;
